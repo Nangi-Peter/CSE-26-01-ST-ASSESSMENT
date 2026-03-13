@@ -1,3 +1,4 @@
+<template>
   <div class="registration-layout">
     <div class="left-panel">
       <div class="logo-wrapper">
@@ -26,33 +27,6 @@
             <label>Date of birth <span class="required">*</span></label>
             <input type="text" v-model="form.dob" placeholder="YYYY / MM / DD" required />
           </div>
-<template>
-  <div class="registration-layout">
-    <div class="left-panel">
-      <div class="logo-wrapper">
-        <img src="../assets/fca-logo.jpg" alt="FCA Logo" class="logo" />
-      </div>
-      <h2 class="program-title">Refugee Support Program</h2>
-    </div>
-
-    <div class="right-panel">
-      <h1 class="form-title">BENEFICIARY REGISTRATION FORM</h1>
-      
-      <form @submit.prevent="submitForm" class="registration-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>First Name <span class="required">*</span></label>
-            <input type="text" v-model="form.firstName" placeholder="Enter your First name" required />
-          </div>
-          <div class="form-group">
-            <label>Last name <span class="required">*</span></label>
-            <input type="text" v-model="form.lastName" placeholder="Enter your Last name" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Date of birth <span class="required">*</span></label>
           <div class="form-group">
             <label>Place of Birth <span class="required">*</span></label>
             <input type="text" v-model="form.placeOfBirth" placeholder="Enter your place of residence" required />
