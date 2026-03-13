@@ -29,28 +29,28 @@
 
               <div class="col-12 col-md-6">
                 <label for="lastName" class="form-label field-label">Last name <span class="required-mark">*</span></label>
-                <input id="lastName" type="text" class="form-control field-control" placeholder="Enter your Last name" required minlength="2">
+                <input id="lastName" type="text" class="form-control field-control" placeholder="Enter your Last name" required minlength="2" class="field-error">
               </div>
 
               <div class="col-12 col-md-6">
                 <label for="dob" class="form-label field-label">Date of birth <span class="required-mark">*</span></label>
-                <input id="dob" type="text" class="form-control field-control" placeholder="YYYY / MM / DD">
+                <input id="dob" type="text" class="form-control field-control" placeholder="YYYY / MM / DD" class="field-error">
               </div>
 
               <div class="col-12 col-md-6">
                 <label for="placeOfBirth" class="form-label field-label">Place of Birth <span class="required-mark">*</span></label>
-                <input id="placeOfBirth" type="text" class="form-control field-control" placeholder="Enter your place of residence" required minlength="2">
+                <input id="placeOfBirth" type="text" class="form-control field-control" placeholder="Enter your place of residence" required minlength="2" class="field-error">
               </div>
 
               <div class="col-12">
                 <label class="form-label field-label">Gender</label>
                 <div class="field-control gender-box d-flex align-items-center justify-content-around ">
                   <div class="form-check m-0">
-                    <input class="form-check-input gender-radio" type="radio" name="gender" id="male" value="male">
+                    <input class="form-check-input gender-radio" type="radio" name="gender" id="male" value="male" class="field-error">
                     <label class="form-check-label gender-label" for="male">Male</label>
                   </div>
                   <div class="form-check m-0">
-                    <input class="form-check-input gender-radio" type="radio" name="gender" id="female" value="female" checked>
+                    <input class="form-check-input gender-radio" type="radio" name="gender" id="female" value="female" checked class="field-error">
                     <label class="form-check-label gender-label" for="female">Female</label>
                   </div>
                 </div>
@@ -98,7 +98,7 @@
 
               <div class="col-12 col-md-6">
                 <label for="joinDate" class="form-label field-label">Date of joining Settlement camp <span class="required-mark">*</span></label>
-                <input id="joinDate" type="text" class="form-control field-control" placeholder="YYYY / MM / DD">
+                <input id="joinDate" type="text" class="form-control field-control" placeholder="YYYY / MM / DD" class="field-error">
               </div>
 
               <div class="col-12 pt-2 d-flex justify-content-end"> 
@@ -131,13 +131,13 @@
           };
 
           if (!formData.firstName || !formData.lastName || !formData.dob || !formData.placeOfBirth || !formData.nationality || !formData.maritalStatus || !formData.settlementCamp || !formData.joinDate) {
-            alert('Please fill in all fields').fieldError = true;
+            fieldError = true;
             return;
           }else if (formData.nationality === '-- Select Nationality --' || formData.maritalStatus === '-- Select Marital status --' || formData.settlementCamp === '-- Select settlement camp --') {
-            alert('Please select valid options for all fields.').fieldError = true;
+            fieldError = true;
             return;
           }else (formData.firstName.length < 2 || formData.lastName.length < 2 || formData.placeOfBirth.length < 2) {
-            alert('First name and Last name must be at least 2 characters long.').fieldError = true;
+            fieldError = true;
             return;
           }
           
