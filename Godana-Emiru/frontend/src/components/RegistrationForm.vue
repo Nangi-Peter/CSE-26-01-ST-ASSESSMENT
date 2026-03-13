@@ -86,7 +86,11 @@ const submitForm = async () => {
             <select v-model="form.nationality" required>
               <option value="" disabled>-- Select Nationality --</option>
               <option value="Ugandan">Ugandan</option>
-              <option value="Congolese">Congolese</option>
+              <option value="Kenyan">Kenyan</option>
+              <option value="Tanzanian">Tanzanian</option>
+              <option value="Burundian">Burundian</option>
+              <option value="Rwandese">Rwandese</option>
+              <option value="Somali">Somali</option>
               <option value="South Sudanese">South Sudanese</option>
             </select>
           </div>
@@ -96,7 +100,9 @@ const submitForm = async () => {
               <option value="" disabled>-- Select Marital status --</option>
               <option value="Single">Single</option>
               <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
               <option value="Widowed">Widowed</option>
+              <option value="Separated">Separated</option>
             </select>
           </div>
         </div>
@@ -106,9 +112,13 @@ const submitForm = async () => {
             <label>Settlement camp <span class="required">*</span></label>
             <select v-model="form.settlementCamp" required>
               <option value="" disabled>-- Select settlement camp --</option>
-              <option value="Bidi Bidi">Bidi Bidi</option>
-              <option value="Nakivale">Nakivale</option>
-              <option value="Kyangwali">Kyangwali</option>
+              <option value="Gulu">Gulu</option>
+              <option value="Arua">Arua</option>
+              <option value="Mbarara">Mbarara</option>
+              <option value="Kasese">Kasese</option>
+              <option value="Busia">Busia</option>
+              <option value="Mbale">Mbale</option>
+              <option value="Kigezi">Kigezi</option>
             </select>
           </div>
           <div class="form-group">

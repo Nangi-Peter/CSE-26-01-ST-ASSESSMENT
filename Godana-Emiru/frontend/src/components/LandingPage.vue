@@ -21,7 +21,7 @@ defineEmits(['start-registration'])
 .landing-container {
   height: 100vh;
   width: 100vw;
-  background-color: #97C73A;
+  background-color: #99CC32;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@ defineEmits(['start-registration'])
 
 .program-name {
   color: white;
-  font-family: sans-serif;
+  font-family: 'Arial Narrow', 'Agency FB';
   font-size: 2.5rem;
   margin-bottom: 40px;
 }
