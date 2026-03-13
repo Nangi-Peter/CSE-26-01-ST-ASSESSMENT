@@ -1,33 +1,59 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import axios from 'axios'
+import { reactive, ref } from "vue";
+import axios from "axios";
 
+const submitted = ref(false);
 const successMessage = ref(false);
-const errors = reactive({})
+const errors = reactive({});
 
 const form = reactive({
-  firstName: '',
-  lastName: '',
-  dateOfBirth: '',
-  placeOfBirth: '',
-  gender: 'Male',
-  nationality: '',
-  maritalStatus: '',
-  settlementCamp: '',
-  dateOfJoining: ''
-})
+  firstName: "",
+  lastName: "",
+  dateOfBirth: "",
+  placeOfBirth: "",
+  gender: "Male",
+  nationality: "",
+  maritalStatus: "",
+  settlementCamp: "",
+  dateOfJoining: "",
+});
+
+const isInvalid = (field) => {
+  return submitted.value && !form[field];
+};
 
 const submitForm = async () => {
+  submitted.value = true;
+
+  const requiredFields = [
+    "firstName",
+    "lastName",
+    "dateOfBirth",
+    "placeOfBirth",
+    "nationality",
+    "maritalStatus",
+    "settlementCamp",
+    "dateOfJoining",
+  ];
+  const hasErrors = requiredFields.some((field) => !form[field]);
+
+  if (hasErrors) return;
+
   try {
-    const response = await axios.post('http://localhost:5000/api/beneficiaries/register', form)
+    const response = await axios.post(
+      "http://localhost:5000/api/beneficiaries/register",
+      form,
+    );
     // alert('Beneficiary Registered Successfully!')
-    successMessage.value = true
+    successMessage.value = true;
     // Reset form
-    Object.keys(form).forEach(key => form[key] = key === 'gender' ? 'Male' : '')
+    Object.keys(form).forEach(
+      (key) => (form[key] = key === "gender" ? "Male" : ""),
+    );
   } catch (error) {
-    alert('Error: ' + (error.response?.data?.error || 'Server error'))
+    alert("Error: " + (error.response?.data?.error || "Server error"));
   }
-}
+};
 </script>
 
 <template>
@@ -40,24 +66,41 @@ const submitForm = async () => {
     </div>
 
     <div class="right-panel">
-
       <Transition name="slide">
         <div v-if="successMessage" class="success-toast">
           <span>Beneficiary registered successfully</span>
-          <button @click="successMessage = false" class="close-toast">&times;</button>
+          <button @click="successMessage = false" class="close-toast">
+            &times;
+          </button>
         </div>
       </Transition>
       <h1 class="form-title">BENEFICIARY REGISTRATION FORM</h1>
-      
+
       <form @submit.prevent="submitForm" class="registration-form">
         <div class="form-row">
           <div class="form-group">
             <label>First Name <span class="required">*</span></label>
-            <input type="text" v-model="form.firstName" placeholder="Enter your First name" required />
+            <input
+              type="text"
+              v-model="form.firstName"
+              placeholder="Enter your First name"
+              required
+              :class="{ 'input-error': isInvalid('firstName') }"
+            /><span v-if="isInvalid('firstName')" class="error-msg"
+              >This field is required</span
+            >
           </div>
           <div class="form-group">
             <label>Last name <span class="required">*</span></label>
-            <input type="text" v-model="form.lastName" placeholder="Enter your Last name" required />
+            <input
+              type="text"
+              v-model="form.lastName"
+              placeholder="Enter your Last name"
+              required
+              :class="{ 'input-error': isInvalid('lastName') }"
+            /><span v-if="isInvalid('lastName')" class="error-msg"
+              >This field is required</span
+            >
           </div>
         </div>
 
@@ -68,22 +111,38 @@ const submitForm = async () => {
           </div>
           <div class="form-group">
             <label>Place of Birth <span class="required">*</span></label>
-            <input type="text" v-model="form.placeOfBirth" placeholder="Enter your place of residence" required />
+            <input
+              type="text"
+              v-model="form.placeOfBirth"
+              placeholder="Enter your place of residence"
+              required
+              :class="{ 'input-error': isInvalid('placeOfBirth') }"
+            />
+            <span v-if="isInvalid('placeOfBirth')" class="error-msg"
+              >This field is required</span
+            >
           </div>
         </div>
 
         <div class="form-group full-width">
           <label>Gender</label>
           <div class="radio-group">
-            <label><input type="radio" value="Male" v-model="form.gender" /> Male</label>
-            <label><input type="radio" value="Female" v-model="form.gender" /> Female</label>
+            <label
+              ><input type="radio" value="Male" v-model="form.gender" />
+              Male</label
+            >
+            <label
+              ><input type="radio" value="Female" v-model="form.gender" />
+              Female</label
+            >
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>Nationality <span class="required">*</span></label>
-            <select v-model="form.nationality" required>
+            <select v-model="form.nationality" required :class="{ 'input-error': isInvalid('nationality') }" >
+
               <option value="" disabled>-- Select Nationality --</option>
               <option value="Ugandan">Ugandan</option>
               <option value="Kenyan">Kenyan</option>
@@ -93,6 +152,7 @@ const submitForm = async () => {
               <option value="Somali">Somali</option>
               <option value="South Sudanese">South Sudanese</option>
             </select>
+            <span v-if="isInvalid('nationality')" class="error-msg">This field is required</span>
           </div>
           <div class="form-group">
             <label>Marital status <span class="required">*</span></label>
@@ -104,6 +164,7 @@ const submitForm = async () => {
               <option value="Widowed">Widowed</option>
               <option value="Separated">Separated</option>
             </select>
+            <span v-if="isInvalid('maritalStatus')" class="error-msg">This field is required</span>
           </div>
         </div>
 
@@ -120,10 +181,15 @@ const submitForm = async () => {
               <option value="Mbale">Mbale</option>
               <option value="Kigezi">Kigezi</option>
             </select>
+            <span v-if="isInvalid('settlementCamp')" class="error-msg">This field is required</span>
           </div>
           <div class="form-group">
-            <label>Date of joining Settlement camp <span class="required">*</span></label>
+            <label
+              >Date of joining Settlement camp
+              <span class="required">*</span></label
+            >
             <input type="date" v-model="form.dateOfJoining" required />
+            <span v-if="isInvalid('dateOfJoining')" class="error-msg">This field is required</span>
           </div>
         </div>
 
@@ -136,10 +202,28 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
+/* Red border for invalid inputs */
+.input-error {
+  border: 1px solid #FF0000 !important;
+}
 
+/* Red error text aligned to the right like the screenshot */
+.error-msg {
+  color: #FF0000;
+  font-size: 11px;
+  text-align: right;
+  margin-top: 2px;
+  display: block;
+}
+
+/* Ensure labels and asterisks look correct */
+.required {
+  color: #FF0000;
+  margin-left: 2px;
+}
 
 .success-toast {
-  background-color: #99CC32; /* Exact green from screenshot 6 */
+  background-color: #99cc32; /* Exact green from screenshot 6 */
   color: white;
   padding: 12px 20px;
   border-radius: 4px;
@@ -148,7 +232,7 @@ const submitForm = async () => {
   align-items: center;
   margin-bottom: 20px;
   font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .close-toast {
@@ -166,14 +250,15 @@ const submitForm = async () => {
 }
 
 /* Transition animation for a smooth entrance */
-.slide-enter-active, .slide-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: all 0.4s ease;
 }
-.slide-enter-from, .slide-leave-to {
+.slide-enter-from,
+.slide-leave-to {
   transform: translateY(-20px);
   opacity: 0;
 }
-
 
 .registration-layout {
   display: flex;
@@ -184,7 +269,7 @@ const submitForm = async () => {
 /* Left Panel Styling */
 .left-panel {
   flex: 1;
-  background-color: #97C73A;
+  background-color: #97c73a;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -204,7 +289,9 @@ const submitForm = async () => {
   margin-bottom: 20px;
 }
 
-.logo { width: 70%; }
+.logo {
+  width: 70%;
+}
 
 /* Right Panel Styling */
 .right-panel {
@@ -214,7 +301,7 @@ const submitForm = async () => {
 }
 
 .form-title {
-  color: #3B5B28;
+  color: #3b5b28;
   font-size: 1.8rem;
   margin-bottom: 30px;
   text-align: center;
@@ -238,11 +325,14 @@ const submitForm = async () => {
   color: #333;
 }
 
-.required { color: red; }
+.required {
+  color: red;
+}
 
-input, select {
+input,
+select {
   padding: 12px;
-  border: 1px solid #B2D469;
+  border: 1px solid #b2d469;
   border-radius: 4px;
   font-size: 1rem;
 }
@@ -251,7 +341,7 @@ input, select {
   display: flex;
   gap: 40px;
   padding: 10px;
-  border: 1px solid #B2D469;
+  border: 1px solid #b2d469;
   border-radius: 4px;
 }
 
@@ -262,15 +352,17 @@ input, select {
 }
 
 .submit-btn {
-  background-color: #97C73A;
+  background-color: #97c73a;
   color: white;
   border: none;
   padding: 12px 60px;
   font-size: 1.2rem;
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.submit-btn:hover { background-color: #86b433; }
+.submit-btn:hover {
+  background-color: #86b433;
+}
 </style>
