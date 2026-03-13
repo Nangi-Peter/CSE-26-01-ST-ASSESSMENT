@@ -4,11 +4,13 @@ const beneficiarySchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: [true, 'First name is required'],
+    minlength: [2, 'Name must be at least 2 characters long'],
     trim: true,
   },
   lastName: {
     type: String,
     required: [true, 'Last name is required'],
+    minlength: [2, 'Name must be at least 2 characters long'],
     trim: true,
   },
   dateOfBirth: {
@@ -32,7 +34,7 @@ const beneficiarySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Nationality is required'],
     enum: {
-      values: ['Ugandan', 'Congolese', 'South Sudanese'],
+      values: ['Ugandan', 'Kenyan', 'Tanzanian', 'Burundian', 'Rwandese', 'Somali', 'South Sudanese'],
       message: '{VALUE} is not a valid nationality'
     }
   },
@@ -40,7 +42,7 @@ const beneficiarySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Marital status is required'],
     enum: {
-      values: ['Single', 'Married', 'Widowed'],
+      values: ['Single', 'Married', 'Divorced', 'Widowed','Separated'],
       message: '{VALUE} is not a valid marital status'
     }
   },
@@ -48,7 +50,7 @@ const beneficiarySchema = new mongoose.Schema({
     type: String,
     required: [true, 'Settlement camp is required'],
     enum: {
-      values: ['Bidi Bidi', 'Nakivale', 'Kyangwali'],
+      values: ['Gulu', 'Arua', 'Mbarara', 'Kasese', 'Busia', 'Mbale', 'Kigezi'],
       message: '{VALUE} is not a valid settlement camp'
     }
   },

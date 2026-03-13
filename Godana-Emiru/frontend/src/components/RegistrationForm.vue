@@ -223,7 +223,7 @@ const submitForm = async () => {
 }
 
 .success-toast {
-  background-color: #99cc32; /* Exact green from screenshot 6 */
+  background-color: #00B050; /* Exact green from screenshot 6 */
   color: white;
   padding: 12px 20px;
   border-radius: 4px;
