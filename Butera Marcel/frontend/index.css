@@ -117,4 +117,12 @@ body {
     color: #fff;
     background-color: #8fbd36;
 }
+.field-error {
+display: block;
+min-height: 18px;
+margin-top: 4px;
+color: #e30000;
+font-size: 0.95rem;
+line-height: 1.1;
+}
 

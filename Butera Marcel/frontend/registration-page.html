@@ -24,7 +24,7 @@
             <div class="row g-3">
               <div class="col-12 col-md-6">
                 <label for="firstName" class="form-label field-label " required>First Name <span class="required-mark">*</span></label>
-                <input id="firstName" type="text" class="form-control field-control" placeholder="Enter your First name" required minlength="2">
+                <input id="firstName" type="text" class="form-control field-control" placeholder="Enter your First name" required minlength="2" class="field-error">
               </div>
 
               <div class="col-12 col-md-6">
@@ -131,15 +131,16 @@
           };
 
           if (!formData.firstName || !formData.lastName || !formData.dob || !formData.placeOfBirth || !formData.nationality || !formData.maritalStatus || !formData.settlementCamp || !formData.joinDate) {
-            alert('Please fill in all fields');
+            alert('Please fill in all fields').fieldError = true;
             return;
           }else if (formData.nationality === '-- Select Nationality --' || formData.maritalStatus === '-- Select Marital status --' || formData.settlementCamp === '-- Select settlement camp --') {
-            alert('Please select valid options for all fields.');
+            alert('Please select valid options for all fields.').fieldError = true;
             return;
-          }else  (formData.firstName.length < 2 || formData.lastName.length < 2 || formData.placeOfBirth.length < 2) {
-            alert('First name and Last name must be at least 2 characters long.');
+          }else (formData.firstName.length < 2 || formData.lastName.length < 2 || formData.placeOfBirth.length < 2) {
+            alert('First name and Last name must be at least 2 characters long.').fieldError = true;
             return;
           }
+          
 
 
           try {
