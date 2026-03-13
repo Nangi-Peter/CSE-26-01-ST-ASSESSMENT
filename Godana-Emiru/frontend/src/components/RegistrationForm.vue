@@ -23,30 +23,26 @@ const isInvalid = (field) => {
 };
 
 const submitForm = async () => {
-  submitted.value = true;
+  submitted.value = true; // This now works because we added 'novalidate'
 
   const requiredFields = [
-    "firstName",
-    "lastName",
-    "dateOfBirth",
-    "placeOfBirth",
-    "nationality",
-    "maritalStatus",
-    "settlementCamp",
-    "dateOfJoining",
+    "firstName", "lastName", "dateOfBirth", "placeOfBirth",
+    "nationality", "maritalStatus", "settlementCamp", "dateOfJoining",
   ];
   const hasErrors = requiredFields.some((field) => !form[field]);
 
   if (hasErrors) return;
 
   try {
-    const response = await axios.post(
-      "http://localhost:5000/api/beneficiaries/register",
-      form,
-    );
-    // alert('Beneficiary Registered Successfully!')
+    const response = await axios.post("http://localhost:5000/api/beneficiaries/register", form);
+    
     successMessage.value = true;
-    // Reset form
+
+    // --- SUCCESS ACTIONS ---
+    successMessage.value = true;
+    submitted.value = false; // CRITICAL: Reset this so errors disappear
+    
+    // Reset form fields
     Object.keys(form).forEach(
       (key) => (form[key] = key === "gender" ? "Male" : ""),
     );
@@ -76,7 +72,7 @@ const submitForm = async () => {
       </Transition>
       <h1 class="form-title">BENEFICIARY REGISTRATION FORM</h1>
 
-      <form @submit.prevent="submitForm" class="registration-form">
+      <form @submit.prevent="submitForm" class="registration-form" novalidate>
         <div class="form-row">
           <div class="form-group">
             <label>First Name <span class="required">*</span></label>
@@ -85,7 +81,7 @@ const submitForm = async () => {
               v-model="form.firstName"
               placeholder="Enter your First name"
               required
-              :class="{ 'input-error': isInvalid('firstName') }"
+              :class="{ 'input-error': isInvalid('firstName'), 'input-success': successMessage}"
             /><span v-if="isInvalid('firstName')" class="error-msg"
               >This field is required</span
             >
@@ -107,7 +103,7 @@ const submitForm = async () => {
         <div class="form-row">
           <div class="form-group">
             <label>Date of birth <span class="required">*</span></label>
-            <input type="date" v-model="form.dateOfBirth" required />
+            <input type="date" v-model="form.dateOfBirth" required :class="{ 'input-error': isInvalid('dateOfBirth') }"/>
           </div>
           <div class="form-group">
             <label>Place of Birth <span class="required">*</span></label>
@@ -202,6 +198,12 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
+
+.input-success {
+  border: 1px solid #00B050 !important; 
+  background-color: #f0fff4; 
+}
+
 /* Red border for invalid inputs */
 .input-error {
   border: 1px solid #FF0000 !important;

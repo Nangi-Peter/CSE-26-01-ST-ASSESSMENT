@@ -25,7 +25,7 @@ const showForm = () => {
 </template>
 
 <style>
-/* Reset browser defaults to allow full-screen green background */
+
 * {
   margin: 0;
   padding: 0;
